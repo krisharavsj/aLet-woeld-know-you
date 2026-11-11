@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>School Event Data Viewer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9f0ff;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3156a3;
+        }
+
+        p {
+            text-align: center;
+            color: #555;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            background: #3156a3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #203d7a;
+        }
+
+        #loading {
+            color: orange;
+            font-weight: bold;
+        }
+
+        #eventDetails {
+            background: #e9f0ff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        pre {
+            background: #f1f1f1;
+            padding: 12px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>School Event Data Viewer</h1>
+        <p>View the latest school event details</p>
+
+        <button onclick="loadEvents()">Load Event Data</button>
+
+        <p id="loading"></p>
+
+        <div id="eventDetails">
+            <h3>Event Details</h3>
+            <p id="details"></p>
+
+            <h3>JSON Data</h3>
+            <pre id="jsonData"></pre>
+        </div>
+
+    </div>
+
+    <script>
+        function loadEvents() {
+            let loading = document.getElementById("loading");
+            let eventDetails = document.getElementById("eventDetails");
+
+            loading.innerHTML = "Loading event data...";
+            eventDetails.style.display = "none";
+
+            setTimeout(function () {
+
+                let events = {
+                    name: "Annual School Day",
+                    date: "20 November 2026",
+                    time: "10:00 AM",
+                    venue: "School Auditorium",
+                    chiefGuest: "Dr. Kumar"
+                };
+
+                let jsonText = JSON.stringify(events, null, 2);
+
+                document.getElementById("jsonData").innerHTML = jsonText;
+
+                let eventObject = JSON.parse(jsonText);
+
+                document.getElementById("details").innerHTML =
+                    "<b>Event:</b> " + eventObject.name + "<br><br>" +
+                    "<b>Date:</b> " + eventObject.date + "<br><br>" +
+                    "<b>Time:</b> " + eventObject.time + "<br><br>" +
+                    "<b>Venue:</b> " + eventObject.venue + "<br><br>" +
+                    "<b>Chief Guest:</b> " + eventObject.chiefGuest;
+
+                loading.innerHTML = "Event data loaded successfully!";
+
+                eventDetails.style.display = "block";
+
+            }, 2000);
+        }
+    </script>
+
+</body>
+
+</html>

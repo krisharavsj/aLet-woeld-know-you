@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Event Registration Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9f0ff;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            max-width: 450px;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3156a3;
+        }
+
+        p {
+            text-align: center;
+            color: #666;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 25px;
+            background: #3156a3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #203d7a;
+        }
+
+        #message {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        #pass {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Event Registration</h1>
+        <p>Register now for our school events!</p>
+
+        <form id="registrationForm">
+
+            <label>Student Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email">
+
+            <label>Phone Number</label>
+            <input type="text" id="phone" placeholder="Enter phone number">
+
+            <label>Select Event</label>
+            <select id="event">
+                <option value="">Choose an event</option>
+                <option value="Sports Day">Sports Day</option>
+                <option value="Science Exhibition">Science Exhibition</option>
+                <option value="Cultural Fest">Cultural Fest</option>
+            </select>
+
+            <button type="submit">Register Now</button>
+
+        </form>
+
+        <p id="message"></p>
+        <div id="pass"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("registrationForm");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let eventName = document.getElementById("event").value;
+
+            let message = document.getElementById("message");
+            let pass = document.getElementById("pass");
+
+            pass.innerHTML = "";
+
+            if (name === "" || email === "" || phone === "" || eventName === "") {
+                message.style.color = "red";
+                message.innerHTML = "Please fill all the fields!";
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                message.style.color = "red";
+                message.innerHTML = "Please enter a valid email!";
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phone)) {
+                message.style.color = "red";
+                message.innerHTML = "Enter a valid 10-digit phone number!";
+                return;
+            }
+
+            message.style.color = "blue";
+            message.innerHTML = "Registration successful! Generating your pass...";
+
+            setTimeout(function () {
+                let passNumber = Math.floor(1000 + Math.random() * 9000);
+
+                pass.innerHTML = "Your Event Pass: EVT" + passNumber;
+                message.innerHTML = "Welcome, " + name + "! You are registered for " + eventName + ".";
+            }, 2000);
+        });
+    </script>
+
+</body>
+
+</html>
